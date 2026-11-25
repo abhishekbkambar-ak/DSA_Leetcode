@@ -1,25 +1,18 @@
 class Solution:
-    def longestPalindrome(self, s: str) -> str:
+    def isValid(self, s: str) -> bool:
         
-        result = ""
+        stack = []
 
-        for i in range(len(s)):
-            left = right = i
-            while left >= 0 and right < len(s) and s[left] == s[right]:
-                if right - left + 1 > len(result):
-                    result = s[left : right +1]
+        for ch in s :
+            if ch == '(' :
+                stack.append(')')
+            elif ch == '{':
+                stack.append('}')
+            elif ch == '[' :
+                stack.append(']')
 
-                left -= 1 
-                right += 1
+            else :
+                if not stack or stack.pop() != ch :
+                    return False
 
-            left = i 
-            right = i+1
-
-            while left >= 0 and right < len(s) and s[left] == s[right]:
-                if right - left + 1 > len(result):
-                    result = s[left:right + 1]
-
-                left -= 1 
-                right += 1 
-
-        return result
+        return len(stack) == 0
